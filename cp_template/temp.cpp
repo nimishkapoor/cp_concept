@@ -9,6 +9,7 @@ typedef long long int ll;
 
 #define gcd __gcd
 #define nof1 __builtin_popcountll
+#define nofleading_zerosull __builtin_clzll
 
 typedef long long ll;
 typedef unsigned long long ull;
@@ -19,9 +20,9 @@ typedef vector<int> vi;
 typedef vector<ii> vii;
 typedef vector<iii> viii;
 typedef vector<long long int> vl;
-    
+
 const double pi = 2 * acos(0.0);
-const int inf = 0x3f3f3f3f;
+const int inf = 0x3f3f3f3f;//(ll) 9e18
 const double infd = 1.0/0.0;
 
 #define pb push_back
@@ -33,7 +34,7 @@ const double infd = 1.0/0.0;
 #define alla(a,n) a, a+n
 //#define endl "\n"
 
-long long power(long long x, long long y,long long MOD)
+/*long long power(long long x, long long y,long long MOD)
 {
 	long long res = 1; 
 	x = x % MOD; 
@@ -61,7 +62,7 @@ long long mul(long long a,long long b,long long MOD)
 	{
 		return (a+(2*(mul(a,b/2,MOD))%MOD))%MOD;
 	}
-}
+}*/
 
 /*ll ncr[6001][6001];
 void nCr(long long MOD)
@@ -121,12 +122,87 @@ bool prime(int x)
 	}
  return true;
 }
+int gcd(int a, int b) 
+{ 
+    if (b == 0) 
+        return a; 
+    return gcd(b, a % b);  
+} 
+int coprime(int a, int b) 
+{ 
+	if(a==b)
+		return 0;
+    if(prime(a) && prime(b)) 
+        return 1; 
+    if((a==2 && b%2!=0) ||(b==2 && a%2!=0))
+		return 1;
+	if((a%2!=0 && prime(b) && a<b ) || (b%2!=0 && prime(a) && a>b))
+		return 1;
+	if(abs(a-b)==1)
+		return 1;
+	if(a==1 || b==1)
+		return 1;
+	return gcd(a,b);
+}
+unsigned long long lcm (unsigned a, unsigned b)
+{
+    return ((unsigned long long) a) * (b / gcd(a, b));
+}
+ll mulmod(ll a,ll b,ll c){
+    ll x = 0,y=a%c;
+    while(b > 0){
+        if(b%2 == 1){
+            x = (x+y)%c;
+        }
+        y = (y*2)%c;
+        b /= 2;
+    }
+    return x%c;
+}
+ll power(ll a,ll b,ll n){
+	if(b==0)
+		return 1;
+	if(b==1) return a%n;
+		ll c=power(a,b/2,n);
+		ll p=mulmod(c%n,c%n,n);
+		if(b%2==0)
+			return p;
+		else
+			 return (mulmod(p,a,n));
+}
+bool fermat_prime(ull x)
+{
+	if(x==2 || x==3)
+	{
+		return 1;
+	}
+	if(x<=3 || x==4)
+	{
+		return 0;
+	}
+	
+	for(int i=1;i<=2;i++)
+	{
+		ull a=2+rand()%(x-4);
+		if(gcd(x,a)!=1)
+		{
+			return 0;
+		}
+		if(power(a,x-1,x)!=1)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
 //======================================================================
 int main()
 {
 	ios_base::sync_with_stdio(0); 
     cin.tie(0);
     
+    //freopen("input.txt", "r", stdin);
+	//freopen("output.txt", "w", stdout);
     
 	return 0;
 }

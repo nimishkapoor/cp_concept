@@ -120,8 +120,10 @@ int lca(int u,int v)
 	{
 		swap(u,v); 
 	}
+
 	int dif=lvl[u]-lvl[v];
 	int lg;
+	
 	while(dif != 0)
 	{
 		lg=log2(dif);
@@ -140,10 +142,7 @@ int lca(int u,int v)
 }
 int dist(int u,int v)
 {
-	if(lvl[u]<lvl[v])
-	{
-		swap(u,v);
-	}
+	
 	int w=lca(u,v);
 	return lvl[u]+lvl[v]-(2*lvl[w]);
 }
