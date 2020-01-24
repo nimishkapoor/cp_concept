@@ -195,6 +195,8 @@ bool fermat_prime(ull x)
 	}
 	return 1;
 }
+//dont use inbuilt ceil
+//use (a+b-1)/b instead.
 //======================================================================
 int main()
 {
